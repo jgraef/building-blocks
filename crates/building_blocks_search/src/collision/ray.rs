@@ -25,7 +25,7 @@ pub fn cast_ray_at_voxels<K>(
     octree: &OctreeDbvt<K>,
     ray: Ray<f32>,
     max_toi: f32,
-    predicate: impl Fn(Point3i) -> bool,
+    predicate: impl Fn(Point3i, &RayIntersection<f32>) -> bool,
 ) -> Option<VoxelRayImpact>
 where
     K: Eq + Hash,
@@ -63,7 +63,7 @@ impl<F> VoxelRayCast<F> {
 
 impl<F> OctreeDbvtVisitor for VoxelRayCast<F>
 where
-    F: Fn(Point3i) -> bool,
+    F: Fn(Point3i, &RayIntersection<f32>) -> bool,
 {
     fn visit(&mut self, aabb: &AABB<f32>, octant: Option<&Octant>, is_leaf: bool) -> VisitStatus {
         let solid = true;
@@ -73,7 +73,7 @@ where
                 if is_leaf {
                     // This calculation is more expensive than just TOI, so we only do it for leaves.
                     let impact = aabb
-                        .toi_and_normal_with_ray(
+                        .toi_and_normal_and_uv_with_ray(
                             &Isometry3::identity(),
                             &self.ray,
                             self.max_toi,
@@ -88,7 +88,7 @@ where
                         &impact.normal,
                     );
 
-                    if (self.predicate)(point) {
+                    if (self.predicate)(point, &impact) {
                         self.earliest_impact = Some(VoxelImpact { point, impact });
                     }
                 }
