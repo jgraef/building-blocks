@@ -13,6 +13,9 @@ description = "Fast meshing algorithms for voxel data structures."
 building_blocks_core = { path = "../building_blocks_core", version = "0.7.0", default-features = false }
 building_blocks_storage = { path = "../building_blocks_storage", version = "0.7.0", default-features = false }
 
+# Optional, feature-gated
+vox-format = { version = "0.1", optional = true }
+
 [dev-dependencies]
 criterion = "0.3"
 

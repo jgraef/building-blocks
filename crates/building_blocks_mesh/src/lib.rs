@@ -91,6 +91,11 @@ pub use height_map::*;
 pub use quad::*;
 pub use surface_nets::*;
 
+
+#[cfg(feature = "vox-format")]
+mod vox_format;
+
+
 #[derive(Clone, Default)]
 pub struct PosNormMesh {
     pub positions: Vec<[f32; 3]>,

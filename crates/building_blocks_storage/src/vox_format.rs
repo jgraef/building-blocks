@@ -80,7 +80,7 @@ use building_blocks_core::Point3i;
 /// Re-export of the `vox-format` crate.
 pub use vox_format;
 
-use crate::{access_traits::GetMut, array::Array3x1};
+use crate::{access_traits::GetMut, array::Array3x1, IsEmpty};
 
 /// Trait that defines how channel values are read from `.VOX` voxels.
 pub trait VoxChannel {
@@ -157,6 +157,12 @@ where
 
     fn set_palette(&mut self, palette: Palette) {
         self.palette = palette;
+    }
+}
+
+impl IsEmpty for ColorIndex {
+    fn is_empty(&self) -> bool {
+        self.0 == 0
     }
 }
 
