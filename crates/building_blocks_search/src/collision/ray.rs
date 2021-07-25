@@ -128,17 +128,17 @@ mod tests {
         let start = na::Point3::new(-1.0, -1.0, -1.0);
 
         let ray = Ray::new(start, na::Point3::new(0.5, 0.5, 0.5) - start);
-        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_| true).unwrap();
+        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_, _| true).unwrap();
         assert_eq!(result.point, PointN([0, 0, 0]));
 
         let ray = Ray::new(start, na::Point3::new(0.0, 15.5, 0.0) - start);
-        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_| true).unwrap();
+        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_, _| true).unwrap();
         assert_eq!(result.point, PointN([0, 15, 0]));
 
         // Cast into the middle where we shouldn't hit anything.
 
         let ray = Ray::new(start, na::Point3::new(0.0, 3.0, 0.0) - start);
-        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_| true);
+        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_, _| true);
         assert!(result.is_none());
     }
 
@@ -148,7 +148,7 @@ mod tests {
 
         let start = na::Point3::new(-1.0, -1.0, -1.0);
         let ray = Ray::new(start, na::Point3::new(0.5, 0.5, 0.5) - start);
-        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_| true).unwrap();
+        let result = cast_ray_at_voxels(&bvt, ray, std::f32::INFINITY, |_, _| true).unwrap();
         assert_eq!(result.point, PointN([0, 0, 0]));
     }
 }
